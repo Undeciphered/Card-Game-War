@@ -109,6 +109,18 @@ class war {
             } 
         }
         
+        void pickup_war_pile(player &winning_player) {
+            if(war_pile.size() != 0) {
+                std::cout << winning_player.get_name() << " won the war and took the cards: ";
+                for(card selected_card : war_pile) {
+                    std::cout << selected_card.card_info() << ", ";
+                    winning_player.pick_up_card(selected_card);
+                }
+                war_pile.clear();
+                std::cout << '\n';
+            }
+        }
+        
         void battle() {
             player_one_card = player_one.draw_first_card();
             player_two_card = player_two.draw_first_card();
@@ -123,28 +135,12 @@ class war {
                 std::cout << player_one.get_name() << " wins and takes the " << player_two_card.card_info() << " and the " << player_one_card.card_info() << '\n';
                 player_one.pick_up_card(player_two_card);
                 player_one.pick_up_card(player_one_card);
-                if(war_pile.size() != 0) {
-                    std::cout << player_one.get_name() << " won the war and took the cards: ";
-                    for(card selected_card : war_pile) {
-                        std::cout << selected_card.card_info() << ", ";
-                        player_one.pick_up_card(selected_card);
-                    }
-                    war_pile.clear();
-                    std::cout << '\n';
-                }
+                pickup_war_pile(player_one);
             } else {
                 std::cout << player_two.get_name() << " wins and takes the " << player_one_card.card_info() << " and the " << player_two_card.card_info() << '\n';
                 player_two.pick_up_card(player_one_card);
                 player_two.pick_up_card(player_two_card);
-                if(war_pile.size() != 0) {
-                    std::cout << player_two.get_name() << " won the war and took the cards: ";
-                    for(card selected_card : war_pile) {
-                        std::cout << selected_card.card_info() << ", ";
-                        player_two.pick_up_card(selected_card);
-                    }
-                    war_pile.clear();
-                    std::cout << '\n';
-                }
+                pickup_war_pile(player_two);
             } 
         }
         
